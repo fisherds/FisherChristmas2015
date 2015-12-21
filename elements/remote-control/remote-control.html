@@ -1,0 +1,80 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="remote-control">
+<template>
+
+	<style>
+	paper-button.custom {
+		--paper-button-ink-color: var(--paper-pink-a200);
+		/* These could also be individually defined for each of the
+		specific css classes, but we'll just do it once as an example */
+		--paper-button-flat-keyboard-focus: {
+			background-color: var(--paper-pink-a200);
+			color: white !important;
+		};
+		--paper-button-raised-keyboard-focus: {
+			background-color: var(--paper-pink-a200) !important;
+			color: white !important;
+		};
+	}
+	paper-button.custom:hover {
+		background-color: var(--paper-indigo-100);
+	}
+	paper-button.indigo {
+		background-color: var(--paper-indigo-500);
+		color: white;
+		--paper-button-raised-keyboard-focus: {
+			background-color: var(--paper-pink-a200) !important;
+			color: white !important;
+		};
+	}
+	paper-button.custom {
+		float: right;
+	}
+	</style>
+	<paper-material elevation="1">
+		<h3>McKinley</h3>
+		<present-button name="mckinley" number="1"></present-button>
+		<present-button name="mckinley" number="2"></present-button>
+		<present-button name="mckinley" number="3"></present-button>
+		<br><br>
+		<present-button name="mckinley" number="4"></present-button>
+		<present-button name="mckinley" number="5"></present-button>
+		<present-button name="mckinley" number="6"></present-button>
+	</paper-material>
+	<paper-material elevation="1">
+		<h3>Keegan</h3>
+		<present-button name="keegan" number="1"></present-button>
+		<present-button name="keegan" number="2"></present-button>
+		<present-button name="keegan" number="3"></present-button>
+		<br><br>
+		<present-button name="keegan" number="4"></present-button>
+		<present-button name="keegan" number="5"></present-button>
+		<present-button name="keegan" number="6"></present-button>
+	</paper-material>
+	<br><br><br>
+	<paper-button raised on-click="resetAll" class="custom indigo">Reset all</paper-button>
+</template>
+
+<script>
+(function() {
+
+	Polymer({
+		is: 'remote-control',
+
+		properties: {
+		},
+
+		resetAll: function(e) {
+			var notFound = "NOT_FOUND";
+			var resetObj = {"1": notFound, "2": notFound, "3": notFound, "4": notFound, "5": notFound, "6": notFound};
+			var ref = new Firebase('https://fisherchristmas2015.firebaseio.com/');
+			ref.child("mckinley").set(resetObj);
+			ref.child("keegan").set(resetObj);
+			console.log("Both McKinley and Keegan have been reset.");
+		}
+	});
+	})();
+	</script>
+
+</dom-module>

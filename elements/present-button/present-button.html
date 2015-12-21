@@ -1,0 +1,36 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="present-button">
+  <template>
+    <paper-button raised on-click="presentClick">Present {{number}}</paper-button>
+  </template>
+
+  <script>
+    (function() {
+
+      Polymer({
+        is: 'present-button',
+
+        properties: {
+          number: {
+            type: Number,
+            value: 1,
+            notify: true
+            },
+            name: {
+                  type: String,
+                  value: 'Daddy',
+                  notify: true
+            }
+          },
+
+          presentClick: function(e) {
+              var ref = new Firebase('https://fisherchristmas2015.firebaseio.com/' + this.name + "/" + this.number);
+              ref.set("NEEDS_TO_PLAY");
+              console.log("Pushed that video " + this.number + " for " + this.name + " needs to be played.");
+          }
+      });
+    })();
+  </script>
+
+</dom-module>
