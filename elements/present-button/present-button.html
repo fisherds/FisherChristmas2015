@@ -4,7 +4,6 @@
   <template>
     <paper-button raised on-click="presentClick">Present {{number}}</paper-button>
   </template>
-
   <script>
     (function() {
 
@@ -13,17 +12,16 @@
 
         properties: {
           number: {
-            type: Number,
+            type: String,
             value: 1,
             notify: true
             },
             name: {
                   type: String,
-                  value: 'Daddy',
+                  value: '',
                   notify: true
             }
           },
-
           presentClick: function(e) {
               var ref = new Firebase('https://fisherchristmas2015.firebaseio.com/' + this.name + "/" + this.number);
               ref.set("NEEDS_TO_PLAY");
@@ -32,5 +30,4 @@
       });
     })();
   </script>
-
 </dom-module>
