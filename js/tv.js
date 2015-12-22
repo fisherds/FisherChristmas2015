@@ -26,16 +26,19 @@ function playSnippet(startTime, endTime) {
     startSeconds: startTime, endSeconds: endTime});
 }
 
+var playing = false;
 function onPlayerStateChange(event) {
   console.log("State change to " + event.data);
   if (event.data == YT.PlayerState.PLAYING) {
     $("#player").show();
     $("img").hide();
     ref.child(playingVideoInfo.firebasePath).child(playingVideoInfo.firebaseKey).set("PLAYING");
-  } else if (event.data == YT.PlayerState.ENDED) {
+    playing = true; // HACK: Trying to avoid showing the image briefly when the video starts.
+  } else if (event.data == YT.PlayerState.ENDED && playing) {
       $("#player").hide();
       $("img").attr("src", playingVideoInfo.imageUrl).show();
       ref.child(playingVideoInfo.firebasePath).child(playingVideoInfo.firebaseKey).set("PLAYED");
+      playing = false;
     }
 }
 
@@ -148,6 +151,5 @@ function registerFirebaseListeners() {
 
 $(document).ready(function() {
   $("#player").hide();  // Will be replaced by an iframe.
-  $("img").show();
   registerFirebaseListeners();
 });
